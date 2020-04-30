@@ -32,7 +32,7 @@ function PracticeList({ practices }) {
         onChange={onChange}
       />
       <br />
-      <table className="table table-sm table-striped">
+      <table className="table table-sm table-striped bg-info">
         <thead className="thead-dark">
           <tr>
             <th scope="col">Name</th>

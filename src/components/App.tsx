@@ -10,7 +10,7 @@ import AboutPage from './common/About';
 class App extends React.PureComponent {
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid p-3 my-3 bg-light text-dark">
           <Header/>
           <Switch>
               <Route exact path="/" component={HomePage}/>
