@@ -4,14 +4,12 @@ export interface Practice {
   code: string;
   address: string;
   postcode: string;
-  contact: {
-    phone: string;
-  };
+  phone: string;
 }
 
 export interface Consultant {
-    id: string,
-    name: string, 
-    gmc:string,
-    practices:[]
+    id: string;
+    name: string;
+    gmc:string;
+    practices:[];
 }

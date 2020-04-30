@@ -2,8 +2,8 @@ import { handleResponse, handleError } from "./apiUtils";
 import { Consultant } from 'model/core';
 const baseUrl = process.env.API_URL + "/consultants/";
 
-export function getConsultants()  {
-  return fetch(baseUrl)
+export function getConsultants(page:number = 1, limit:number = 10)  {
+  return fetch(baseUrl + "?_page=" + page + "&" + "_limit=" + limit)
     .then(handleResponse)
     .catch(handleError);
 }

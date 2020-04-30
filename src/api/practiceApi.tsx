@@ -2,8 +2,8 @@ import { handleResponse, handleError } from "./apiUtils";
 import { Practice } from 'model/core';
 const baseUrl = process.env.API_URL + "/practices/";
 
-export function getPractices() {
-  return fetch(baseUrl)
+export function getPractices(page:number = 1, limit:number = 10) {
+  return fetch(baseUrl + "?_page=" + page + "&" + "_limit=" + limit)
     .then(handleResponse)
     .catch(handleError);
 }

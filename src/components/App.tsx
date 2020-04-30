@@ -4,6 +4,8 @@ import Header from './common/Header';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import PageNotFound from './exceptions/PageNotFound';
+import ConsultantPage from './consultants/ConsultantPage';
+import AboutPage from './common/About';
 
 class App extends React.PureComponent {
   render() {
@@ -12,7 +14,9 @@ class App extends React.PureComponent {
           <Header/>
           <Switch>
               <Route exact path="/" component={HomePage}/>
-              <Route path="/practices" component={PracticePage}/>            
+              <Route path="/practices" component={PracticePage}/>  
+              <Route path="/consultants" component={ConsultantPage}/>   
+              <Route path="/about" component={AboutPage}/>            
               <Route component={PageNotFound}/>
           </Switch>        
       </div>
