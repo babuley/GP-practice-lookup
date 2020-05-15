@@ -22,9 +22,10 @@ class App extends React.PureComponent {
       <div className="container-fluid p-3 my-3 bg-light text-dark">
           <Header auth={this.auth}/>
           <Switch>
-              <Route exact path="/" render={props => <HomePage auth={this.auth} {...props}/> }/>
-              <Route path="/practices" component={PracticePage}/>  
-              <Route path="/consultants" component={ConsultantPage}/>   
+              <Route exact path="/" 
+                render={props => <HomePage auth={this.auth} {...props}/> }/>
+              <Route path="/practices" render={props => <PracticePage auth={this.auth}/> } />  
+              <Route path="/consultants" render={props => <ConsultantPage auth={this.auth}/> }/>   
               <Route path="/about" component={AboutPage}/>                          
               <Route path="/callback" render={props => <Callback auth={this.auth} {...props}/>}/>
               <Route path="/profile" render={ (props) =>

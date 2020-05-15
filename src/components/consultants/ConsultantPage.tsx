@@ -14,8 +14,10 @@ class ConsultantPage extends React.Component {
 
   componentDidMount() {
     const { consultants, actions, perPage } = this.props;
+    
+    const { isAuthenticated } = this.props.auth;
 
-    if (consultants.length === 0) {
+    if (isAuthenticated() && consultants.length === 0) {
       actions.loadConsultants(0,perPage).catch((error) => {
         alert("Loading consultants failed " + error);
       });
@@ -31,9 +33,12 @@ class ConsultantPage extends React.Component {
   };
 
   render() {
+    const { isAuthenticated } = this.props.auth;
     return (
-      <>
-        <h2>Consultants</h2>
+      <>    
+      {!isAuthenticated() ? <div/> :
+        <div className="container-fluid">
+        <h2>Consultants</h2>                        
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -61,6 +66,7 @@ class ConsultantPage extends React.Component {
             />
           </div>
         )}
+      </div>}    
       </>
     );
   }

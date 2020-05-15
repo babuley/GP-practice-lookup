@@ -9,14 +9,14 @@ import ReactPaginate from "react-paginate";
 
 class PracticePage extends React.Component {
   state = {
-    pageCount: 10
+    pageCount: 10,
   };
 
   componentDidMount() {
-    const { practices, actions, perPage} = this.props;
-
-    if (practices.length === 0) {
-      actions.loadPractices(1,perPage).catch((error) => {
+    const { practices, actions, perPage } = this.props;
+    const { isAuthenticated } = this.props.auth;
+    if (isAuthenticated() && practices.length === 0) {
+      actions.loadPractices(1, perPage).catch((error) => {
         alert("Loading practices failed " + error);
       });
     }
@@ -24,42 +24,50 @@ class PracticePage extends React.Component {
 
   handlePageClick = (data) => {
     const { actions, perPage } = this.props;
-    let selected = data.selected;  
+    let selected = data.selected;
     actions.loadPractices(selected, perPage).catch((error) => {
       alert("Loading consultants failed " + error);
     });
   };
 
   render() {
+    const { isAuthenticated } = this.props.auth;
+
     return (
       <>
-        <h2>Practices</h2>
-        {this.props.loading ? (
-          <Spinner />
+        {!isAuthenticated() ? (
+          <div />
         ) : (
-          <div>
-            <PracticeList practices={this.props.practices} />
+          <div className="container-fluid">
+            <h2>Practices</h2>
+            {this.props.loading ? (
+              <Spinner />
+            ) : (
+              <div>
+                <PracticeList practices={this.props.practices} />
 
-            <ReactPaginate
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              activeClassName={"active"}
-              previousLabel={"previous"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              pageCount={this.state.pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              subContainerClassName={"pages pagination"}
-            />
+                <ReactPaginate
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  containerClassName={"pagination"}
+                  pageClassName={"page-item"}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  activeClassName={"active"}
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageClick}
+                  subContainerClassName={"pages pagination"}
+                />
+              </div>
+            )}
           </div>
         )}
       </>
@@ -71,14 +79,14 @@ PracticePage.propTypes = {
   practices: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  perPage: PropTypes.number.isRequired
+  perPage: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     practices: state.practices,
     loading: state.apiCallsInProgress > 0,
-    perPage : 10
+    perPage: 10,
   };
 }
 

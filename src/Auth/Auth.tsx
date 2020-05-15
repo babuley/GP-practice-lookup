@@ -32,7 +32,6 @@ export default class Auth {
     }
 
     setSession = (authResult) => {
-        console.log(authResult);
         const expiresAt = JSON.stringify(authResult.expiresIn * 1000  + new Date().getTime());
 
         localStorage.setItem("access_token", authResult.accessToken);
@@ -47,16 +46,15 @@ export default class Auth {
 
     logout = () => {
         let keys = ["access_token","id_token","expires_at" ];
-        keys.forEach(k => {
+        keys.forEach(k => {            
             localStorage.removeItem(k);
         });
         this.userProfile = null;
         this.auth0.logout({
             clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
             returnTo: process.env.REACT_APP_AUTH0_RETURN_TO
-
         });
-    }
+    };
 
     getAccessToken = () => {
         const accessToken = localStorage.getItem("access_token");
@@ -67,7 +65,12 @@ export default class Auth {
     };
 
     getProfile = (callback) => {
+        if (!this.isAuthenticated()) {
+            callback({});
+        }
+
         if (this.userProfile) return callback(this.userProfile);
+        
         this.auth0.client.userInfo(this.getAccessToken(), (err, profile) => {
             if (profile) this.userProfile = profile;
             callback(profile, err);
